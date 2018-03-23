@@ -1,0 +1,49 @@
+
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'application.CompApp'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+    }
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+task compile(type: JavaCompile) {
+    source = fileTree(dir: 'src', include: '**/*.java')
+    destinationDir = file('build/classes/main')
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    dependencyCacheDir = file("${buildDir}/dependency-cache")
+    classpath = files('build/classes/main')
+}
+
+run {
+    // Uses application plugin to run, default implementation works
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    destinationDir = file('distributable')
+}
