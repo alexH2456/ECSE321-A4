@@ -14,11 +14,7 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 /bin/
-/distributable/
 .project
 .settings
 .vscode
 .classpath
-gradlew
-gradlew.bat
-/gradle/
