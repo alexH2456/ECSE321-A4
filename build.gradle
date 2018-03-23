@@ -29,13 +29,22 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task compile(type: JavaCompile, dependsOn: 'test') {
+task compile(type: JavaCompile, dependsOn: 'testCompile') {
     source = sourceSets.main.java
-    destinationDir = file('build/classes/main')
+    destinationDir = file('build/classes')
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
     dependencyCacheDir = file("${buildDir}/dependency-cache")
-    classpath = files('build/classes/main')   
+    classpath = files('build/classess')   
+}
+
+task testCompile(type: JavaCompile) {
+    source = sourceSets.test.java
+    destinationDir = file('build/classes/test')
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    dependencyCacheDir = file("${buildDir}/dependency-cache")
+    classpath = files('build/classes/test')
 }
 
 run {
