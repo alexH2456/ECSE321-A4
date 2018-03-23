@@ -20,21 +20,22 @@ sourceSets {
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+    compile 'junit:junit:4.12'
     testCompile 'junit:junit:4.12'
 }
 
-task compile(type: JavaCompile) {
-    source = fileTree(dir: 'src', include: '**/*.java')
+task compile(type: JavaCompile, dependsOn: 'test') {
+    source = sourceSets.main.java
     destinationDir = file('build/classes/main')
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
     dependencyCacheDir = file("${buildDir}/dependency-cache")
-    classpath = files('build/classes/main')
+    classpath = files('build/classes/main')   
 }
 
 run {
@@ -46,4 +47,9 @@ jar {
         attributes 'Main-Class': mainClassName
     }
     destinationDir = file('distributable')
+}
+
+clean {
+    delete file('distributable')
+    delete file('bin')
 }
