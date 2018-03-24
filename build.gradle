@@ -29,28 +29,21 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task compile(type: JavaCompile, dependsOn: 'testCompile') {
+// Compile main classes manually and use compileTestJava to compile test classes
+task compile(type: JavaCompile, dependsOn: 'compileTestJava') {
     source = sourceSets.main.java
-    destinationDir = file('build/classes')
+    destinationDir = file('build/classes/main')
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
-    dependencyCacheDir = file("${buildDir}/dependency-cache")
-    classpath = files('build/classess')   
-}
-
-task testCompile(type: JavaCompile) {
-    source = sourceSets.test.java
-    destinationDir = file('build/classes/test')
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
-    dependencyCacheDir = file("${buildDir}/dependency-cache")
-    classpath = files('build/classes/test')
+    dependencyCacheDir = file("${buildDir}/dependency-cache/main")
+    classpath = files('build/classes/main')
 }
 
 run {
     // Uses application plugin to run, default implementation works
 }
 
+// Set name a destination directory for jar file
 jar {
     manifest {
         attributes 'Main-Class': mainClassName
